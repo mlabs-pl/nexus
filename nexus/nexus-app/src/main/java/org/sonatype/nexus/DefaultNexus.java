@@ -439,8 +439,6 @@ public class DefaultNexus
 
         try
         {
-            cacheWrapper.start();
-
             // force config load and validation
             // applies configuration and notifies listeners
             nexusConfiguration.loadConfiguration( true );
