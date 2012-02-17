@@ -185,6 +185,7 @@
     <spice-timeline.version>2.1</spice-timeline.version>
     <spice-utils.version>1.0.0</spice-utils.version>
     <surefire.version>2.10</surefire.version>
+    <lucene.version>3.5.0</lucene.version>
     <!-- HACK: Workaround for issue with IDEA loading nexus-plugins -->
     <nexus-plugin.type>nexus-plugin</nexus-plugin.type>
   </properties>
@@ -1273,6 +1274,18 @@
         <artifactId>commons-collections</artifactId>
         <version>3.2.1</version>
       </dependency>
+
+      <!-- NEXUS-4868 -->
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-highlighter</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -1430,6 +1443,17 @@
                     <include>org.eclipse.jetty:*:${jetty.version}</include>
                   </includes>
                   <message>Use the Eclipse/Jetty version defined in nexus parent. See jetty.version property</message>
+                </bannedDependencies>
+
+                <bannedDependencies>
+                  <searchTransitive>true</searchTransitive>
+                  <excludes>
+                    <exclude>org.apache.lucene:*</exclude>
+                  </excludes>
+                  <includes>
+                    <include>org.apache.lucene:*:${lucene.version}</include>
+                  </includes>
+                  <message>Use the lucene version defined in nexus parent. See lucene.version property</message>
                 </bannedDependencies>
 
                 <!-- <requirePluginVersions> <banSnapshots>false</banSnapshots> </requirePluginVersions> -->
