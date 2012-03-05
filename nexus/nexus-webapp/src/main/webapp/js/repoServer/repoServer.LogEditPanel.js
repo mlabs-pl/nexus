@@ -42,8 +42,7 @@ Sonatype.repoServer.LogEditPanel = function(config) {
 
         items : [{
               xtype : 'fieldset',
-              checkboxToggle : false,
-              collapsible : true,
+              collapsible : false,
               collapsed : false,
               id : formId + '_' + 'logConfig',
               title : 'Configuration',
@@ -70,12 +69,12 @@ Sonatype.repoServer.LogEditPanel = function(config) {
                   }, {
                     xtype : 'textfield',
                     fieldLabel : 'Root Logger Appenders',
-                    itemCls : 'required-field',
-                    allowBlank : false,
+                    allowBlank : true,
                     helpText : ht.rootLoggerAppenders,
                     name : 'rootLoggerAppenders',
                     anchor : Sonatype.view.FIELD_OFFSET,
-                    disabled : true
+                    disabled : true,
+                    required: false
                   }, {
                     xtype : 'textfield',
                     fieldLabel : 'File Appender Pattern',
@@ -87,12 +86,12 @@ Sonatype.repoServer.LogEditPanel = function(config) {
                   }, {
                     xtype : 'textfield',
                     fieldLabel : 'File Appender Location',
-                    itemCls : 'required-field',
-                    allowBlank : false,
+                    allowBlank : true,
                     name : 'fileAppenderLocation',
                     helpText : ht.fileAppenderLocation,
                     anchor : Sonatype.view.FIELD_OFFSET,
-                    disabled : true
+                    disabled : true,
+                    required: false
                   }]
             }],
 
