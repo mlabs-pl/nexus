@@ -67,7 +67,6 @@
   </build>
 
   <dependencies>
-
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-bundle-launcher</artifactId>
@@ -82,18 +81,9 @@
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.sonatype.sisu.litmus</groupId>
       <artifactId>litmus-testsupport</artifactId>
-      <version>1.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.mockito</groupId>
-          <artifactId>mockito-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 

@@ -981,9 +981,15 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>org.sonatype.sisu.litmus</groupId>
+        <artifactId>litmus-testsupport</artifactId>
+        <version>1.3-SNAPSHOT</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit-dep</artifactId>
-        <version>4.8.2</version>
+        <version>4.10</version>
         <type>jar</type>
         <scope>test</scope>
       </dependency>
@@ -1389,6 +1395,13 @@
                 <bannedDependencies>
                   <searchTransitive>true</searchTransitive>
                   <excludes>
+                    <exclude>junit:junit-dep:(,4.9]</exclude>
+                  </excludes>
+                  <message>junit:junit-dep 4.9 wrongly includes hamcrest api in jar, 4.10 or greater required due to TestRule changes over earlier versions</message>
+                </bannedDependencies>
+                <bannedDependencies>
+                  <searchTransitive>true</searchTransitive>
+                  <excludes>
                     <exclude>org.mockito:mockito-all</exclude>
                   </excludes>
                   <message>mockito-all includes third party classes within it - use mockito-core instead</message>
@@ -1428,7 +1441,6 @@
                   <includes>
                     <include>log4j:*</include>
                   </includes>
-
                   <message>Do not use log4j api directly in tests. Use slf4j api instead.</message>
                 </bannedDependencies>
                 <bannedDependencies>
