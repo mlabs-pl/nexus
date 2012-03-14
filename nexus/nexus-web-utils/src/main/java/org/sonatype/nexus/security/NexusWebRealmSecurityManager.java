@@ -37,10 +37,21 @@ public class NexusWebRealmSecurityManager
     implements org.apache.shiro.util.Initializable
 {
     @Inject
+    public NexusWebRealmSecurityManager( Map<String, RolePermissionResolver> rolePermissionResolverMap )
+    {
+        super( rolePermissionResolverMap );
+    }
+
+    /**
+     * @param logger Ignored
+     * @param rolePermissionResolverMap
+     * @deprecated do not use logger in constructor.
+     */
+    @Deprecated
     public NexusWebRealmSecurityManager( Logger logger, Map<String, RolePermissionResolver> rolePermissionResolverMap )
     {
-        super( logger, rolePermissionResolverMap );
-    }    
+        this( rolePermissionResolverMap );
+    }
 
     public void init()
         throws ShiroException

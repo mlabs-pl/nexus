@@ -85,7 +85,8 @@ public class PlexusContainerContextListener
                         plexusXmlFile.toURI().toURL() ).setContext( (Map) plexusContext ).setAutoWiring( true ).setClassPathScanning(
                         PlexusConstants.SCANNING_INDEX ).setComponentVisibility( PlexusConstants.GLOBAL_VISIBILITY );
 
-                final ArrayList<Module> modules = new ArrayList<Module>( 1 );
+                final ArrayList<Module> modules = new ArrayList<Module>( 2 );
+                modules.add( new NexusShiroWebModule( sce.getServletContext() ) );
                 modules.add( new AppContextModule( plexusContext ) );
 
                 final Module[] customModules = (Module[]) context.getAttribute( CUSTOM_MODULES );

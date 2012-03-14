@@ -16,12 +16,16 @@ import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
+import org.apache.shiro.util.ThreadContext;
 import org.junit.Assert;
 import org.junit.Test;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.codehaus.plexus.util.FileUtils;
+import org.junit.internal.runners.JUnit38ClassRunner;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.sonatype.jettytestsuite.ServletServer;
 import org.sonatype.nexus.configuration.application.ApplicationConfiguration;
 import org.sonatype.nexus.proxy.AbstractProxyTestEnvironment;
@@ -44,6 +48,8 @@ public class AccessTest
     private M2TestsuiteEnvironmentBuilder jettyTestsuiteEnvironmentBuilder;
 
     protected ApplicationConfiguration applicationConfiguration;
+
+    private SecuritySystem securitySystem;
 
     @Override
     public void setUp()
@@ -68,7 +74,17 @@ public class AccessTest
         applicationConfiguration.saveConfiguration();
 
         // setup security
-        this.lookup( SecuritySystem.class ).start(); // need to call start to clear caches
+        securitySystem = this.lookup( SecuritySystem.class );
+        securitySystem.start(); // need to call start to clear caches
+    }
+
+    @Override
+    public void tearDown()
+        throws Exception
+    {
+        ThreadContext.remove();
+        securitySystem.stop();
+        super.tearDown();
     }
 
     @Override
@@ -143,8 +159,6 @@ public class AccessTest
         throws AuthenticationException, Exception
     {
         WebSecurityUtil.setupWebContext( username + "-" + repositoryId + "-" + path );
-
-        SecuritySystem securitySystem = this.lookup( SecuritySystem.class );
 
         Subject subject = securitySystem.login( new UsernamePasswordToken( username, "" ) );
 

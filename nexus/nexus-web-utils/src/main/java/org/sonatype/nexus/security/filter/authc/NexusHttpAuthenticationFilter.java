@@ -36,8 +36,8 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.nexus.auth.ClientInfo;
 import org.sonatype.nexus.auth.NexusAuthenticationEvent;
 import org.sonatype.nexus.configuration.application.NexusConfiguration;
-import org.sonatype.nexus.rest.RemoteIPFinder;
 import org.sonatype.nexus.security.filter.NexusJSecurityFilter;
+import org.sonatype.nexus.rest.RemoteIPFinder;
 import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
 
 public class NexusHttpAuthenticationFilter

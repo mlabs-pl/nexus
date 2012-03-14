@@ -26,27 +26,43 @@ import org.sonatype.security.realms.privileges.AbstractPrivilegeDescriptor;
 import org.sonatype.security.realms.privileges.PrivilegeDescriptor;
 import org.sonatype.security.realms.privileges.PrivilegePropertyDescriptor;
 import org.sonatype.security.realms.privileges.application.ApplicationPrivilegeMethodPropertyDescriptor;
+import org.sonatype.security.realms.validator.ConfigurationIdGenerator;
 import org.sonatype.security.realms.validator.SecurityValidationContext;
 
-@Component( role = PrivilegeDescriptor.class, hint = "TargetPrivilegeDescriptor" )
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+@Named( "TargetPrivilegeDescriptor" )
+@Singleton
+//@Typed( PrivilegeDescriptor.class )
 public class TargetPrivilegeDescriptor
     extends AbstractPrivilegeDescriptor
-    implements PrivilegeDescriptor
 {
     public static final String TYPE = "target";
     
-    @Requirement( role = PrivilegePropertyDescriptor.class, hint = "ApplicationPrivilegeMethodPropertyDescriptor" )
-    private PrivilegePropertyDescriptor methodProperty;
+    private final PrivilegePropertyDescriptor methodProperty;
     
-    @Requirement( role = PrivilegePropertyDescriptor.class, hint = "TargetPrivilegeRepositoryTargetPropertyDescriptor" )
-    private PrivilegePropertyDescriptor targetProperty;
+    private final PrivilegePropertyDescriptor targetProperty;
     
-    @Requirement( role = PrivilegePropertyDescriptor.class, hint = "TargetPrivilegeRepositoryPropertyDescriptor" )
-    private PrivilegePropertyDescriptor repositoryProperty;
-    
-    @Requirement( role = PrivilegePropertyDescriptor.class, hint = "TargetPrivilegeGroupPropertyDescriptor" )
-    private PrivilegePropertyDescriptor groupProperty;
-    
+    private final PrivilegePropertyDescriptor repositoryProperty;
+
+    private final PrivilegePropertyDescriptor groupProperty;
+
+    @Inject
+    public TargetPrivilegeDescriptor( ConfigurationIdGenerator idGenerator,
+                                      @Named( "ApplicationPrivilegeMethodPropertyDescriptor" )PrivilegePropertyDescriptor methodProperty,
+                                      @Named( "TargetPrivilegeRepositoryTargetPropertyDescriptor" )PrivilegePropertyDescriptor targetProperty,
+                                      @Named( "TargetPrivilegeRepositoryPropertyDescriptor" )PrivilegePropertyDescriptor repositoryProperty,
+                                      @Named( "TargetPrivilegeGroupPropertyDescriptor" )PrivilegePropertyDescriptor groupProperty )
+    {
+        super( idGenerator );
+        this.methodProperty = methodProperty;
+        this.targetProperty = targetProperty;
+        this.repositoryProperty = repositoryProperty;
+        this.groupProperty = groupProperty;
+    }
+
     public String getName()
     {
         return "Repository Target";

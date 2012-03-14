@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.shiro.util.ThreadContext;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -101,6 +102,15 @@ public class DefaultRepositoryRouterTest
         this.securitySystem = this.lookup( SecuritySystem.class );
         this.securitySystem.start();
 
+    }
+
+    @Override
+    public void tearDown()
+        throws Exception
+    {
+        ThreadContext.remove();
+        securitySystem.stop();
+        super.tearDown();
     }
 
     @Test

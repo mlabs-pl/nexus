@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.inject.servlet.ServletModule;
+import org.apache.shiro.guice.web.GuiceShiroFilter;
 
 /**
  * Guice module for binding nexus servlets.
@@ -36,6 +37,9 @@ public class NexusServletModule
         requestStaticInjection( NexusGuiceFilter.class );
 
         serve( "/*" ).with( NexusRestletServlet.class, nexusRestletServletInitParams() );
+
+        filter("/service/*").through( GuiceShiroFilter.class );
+        filter("/content/*").through( GuiceShiroFilter.class );
     }
 
     private Map<String, String> nexusRestletServletInitParams()

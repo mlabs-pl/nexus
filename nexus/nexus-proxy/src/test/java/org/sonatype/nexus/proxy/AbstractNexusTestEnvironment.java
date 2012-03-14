@@ -17,6 +17,7 @@ import org.sonatype.nexus.proxy.cache.CacheManager;
 import org.sonatype.nexus.proxy.item.RepositoryItemUidFactory;
 import org.sonatype.nexus.proxy.item.uid.RepositoryItemUidAttributeManager;
 import org.sonatype.security.SecuritySystem;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public abstract class AbstractNexusTestEnvironment
     extends AbstractNexusTestCase

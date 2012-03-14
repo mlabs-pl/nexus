@@ -22,6 +22,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.shiro.util.ThreadContext;
 import org.codehaus.plexus.util.FileUtils;
 import org.junit.Test;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -109,9 +110,18 @@ public class ProtectedRepositoryRegistryTest
         // URL url = Thread.currentThread().getContextClassLoader().getResource( resource );
         // FileUtils.copyURLToFile( url, new File( CONF_HOME, "security-configuration.xml" ) );
 
-        // this.securitySystem.start();
+        this.securitySystem.start();
 
         waitForTasksToStop();
+    }
+
+    @Override
+    public void tearDown()
+        throws Exception
+    {
+        ThreadContext.remove();
+        securitySystem.stop();
+        super.tearDown();
     }
 
     @Test
