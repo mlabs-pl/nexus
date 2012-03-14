@@ -12,12 +12,12 @@
     <!-- Security filter -->
     <filter>
         <filter-name>nexusFilter</filter-name>
-        <filter-class>org.sonatype.nexus.security.filter.NexusJSecurityFilter</filter-class>
+        <filter-class>NexusJSecurityFilter</filter-class>
         <init-param>
             <param-name>config</param-name>
             <param-value>
 			[filters]
-			authcBasic = org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter
+			authcBasic = NexusHttpAuthenticationFilter
 			authcBasic.applicationName = Sonatype Nexus Repository Manager API
 			authcBasic.fakeAuthScheme = true
 
@@ -25,27 +25,27 @@
 
 			perms = org.sonatype.nexus.security.filter.authz.HttpVerbMappingAuthorizationFilter
 
-			trperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+			trperms = NexusTargetMappingAuthorizationFilter
 			trperms.pathPrefix = /service/local/repositories/(.*)/content(.*)
 			trperms.pathReplacement = /repositories/@1@2
 
-			tiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+			tiperms = NexusTargetMappingAuthorizationFilter
 			tiperms.pathPrefix = /service/local/repositories/(.*)/index_content(.*)
 			tiperms.pathReplacement = /repositories/@1@2
 
-			tgperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+			tgperms = NexusTargetMappingAuthorizationFilter
 			tgperms.pathPrefix = /service/local/repo_groups/(.*)/content(.*)
 			tgperms.pathReplacement = /groups/@1@2
 
-            tgiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+            tgiperms = NexusTargetMappingAuthorizationFilter
             tgiperms.pathPrefix = /service/local/repo_groups/(.*)/index_content(.*)
             tgiperms.pathReplacement = /repo_groups/@1@2
 
-			contentAuthcBasic = org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter
+			contentAuthcBasic = NexusHttpAuthenticationFilter
 			contentAuthcBasic.applicationName = Sonatype Nexus Repository Manager
 			contentAuthcBasic.fakeAuthScheme = false
 
-			contentTperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+			contentTperms = NexusTargetMappingAuthorizationFilter
 			contentTperms.pathPrefix = /content(.*)
 			contentTperms.pathReplacement = @1
 			</param-value>

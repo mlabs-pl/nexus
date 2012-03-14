@@ -16,39 +16,40 @@
         <init-param>
             <param-name>config</param-name>
             <param-value>
-			[filters]
-			authcBasic = org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter
-			authcBasic.applicationName = Sonatype Nexus Repository Manager API
-			authcBasic.fakeAuthScheme = true
+                [filters]
+                authcBasic = org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter
+                authcBasic.applicationName = Sonatype Nexus Repository Manager API
+                authcBasic.fakeAuthScheme = true
 
-			logout = org.sonatype.nexus.security.filter.authc.LogoutAuthenticationFilter
+                logout = org.sonatype.nexus.security.filter.authc.LogoutAuthenticationFilter
 
-			perms = org.sonatype.nexus.security.filter.authz.HttpVerbMappingAuthorizationFilter
+                perms = org.sonatype.nexus.security.filter.authz.HttpVerbMappingAuthorizationFilter
 
-			trperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
-			trperms.pathPrefix = /service/local/repositories/(.*)/content(.*)
-			trperms.pathReplacement = /repositories/@1@2
+                trperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+                trperms.pathPrefix = /service/local/repositories/(.*)/content(.*)
+                trperms.pathReplacement = /repositories/@1@2
 
-			tiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
-			tiperms.pathPrefix = /service/local/repositories/(.*)/index_content(.*)
-			tiperms.pathReplacement = /repositories/@1@2
+                tiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+                tiperms.pathPrefix = /service/local/repositories/(.*)/index_content(.*)
+                tiperms.pathReplacement = /repositories/@1@2
 
-			tgperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
-			tgperms.pathPrefix = /service/local/repo_groups/(.*)/content(.*)
-			tgperms.pathReplacement = /groups/@1@2
+                tgperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+                tgperms.pathPrefix = /service/local/repo_groups/(.*)/content(.*)
+                tgperms.pathReplacement = /groups/@1@2
 
-            tgiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
-            tgiperms.pathPrefix = /service/local/repo_groups/(.*)/index_content(.*)
-            tgiperms.pathReplacement = /repo_groups/@1@2
+                tgiperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+                tgiperms.pathPrefix = /service/local/repo_groups/(.*)/index_content(.*)
+                tgiperms.pathReplacement = /repo_groups/@1@2
 
-			contentAuthcBasic = org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter
-			contentAuthcBasic.applicationName = Sonatype Nexus Repository Manager
-			contentAuthcBasic.fakeAuthScheme = false
+                contentAuthcBasic =
+                org.sonatype.nexus.security.filter.aorg.sonatype.nexus.filter.authc.NexusHttpAuthenticationFiltere =
+                Sonatype Nexus Repository Manager
+                contentAuthcBasic.fakeAuthScheme = false
 
-			contentTperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
-			contentTperms.pathPrefix = /content(.*)
-			contentTperms.pathReplacement = @1
-			</param-value>
+                contentTperms = org.sonatype.nexus.security.filter.authz.NexusTargetMappingAuthorizationFilter
+                contentTperms.pathPrefix = /content(.*)
+                contentTperms.pathReplacement = @1
+            </param-value>
         </init-param>
     </filter>
 

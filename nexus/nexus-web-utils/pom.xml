@@ -75,11 +75,23 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
+
     <dependency>
       <groupId>org.sonatype.sisu.inject</groupId>
       <artifactId>guice-servlet</artifactId>
-    </dependency>    
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.security</groupId>
+      <artifactId>security-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <!--<version>${shiro.version}</version>-->
+    </dependency>
+
 
     <!-- Testing -->
     <dependency>

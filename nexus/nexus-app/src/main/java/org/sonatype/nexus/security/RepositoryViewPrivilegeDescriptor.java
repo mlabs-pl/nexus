@@ -12,29 +12,38 @@
  */
 package org.sonatype.nexus.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 import org.sonatype.configuration.validation.ValidationResponse;
 import org.sonatype.nexus.proxy.access.NexusItemAuthorizer;
 import org.sonatype.security.model.CPrivilege;
 import org.sonatype.security.realms.privileges.AbstractPrivilegeDescriptor;
-import org.sonatype.security.realms.privileges.PrivilegeDescriptor;
 import org.sonatype.security.realms.privileges.PrivilegePropertyDescriptor;
+import org.sonatype.security.realms.validator.ConfigurationIdGenerator;
 import org.sonatype.security.realms.validator.SecurityValidationContext;
 
-@Component( role = PrivilegeDescriptor.class, hint = "RepositoryViewPrivilegeDescriptor" )
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+
+@Named( "RepositoryViewPrivilegeDescriptor" )
+@Singleton
+//@Typed( PrivilegeDescriptor.class )
 public class RepositoryViewPrivilegeDescriptor
     extends AbstractPrivilegeDescriptor
-    implements PrivilegeDescriptor
 {
     public static final String TYPE = "repository";
 
-    @Requirement( role = PrivilegePropertyDescriptor.class, hint = "RepositoryPropertyDescriptor" )
-    private PrivilegePropertyDescriptor repoProperty;
+    private final PrivilegePropertyDescriptor repoProperty;
+
+    @Inject
+    public RepositoryViewPrivilegeDescriptor( ConfigurationIdGenerator idGenerator,
+                                              @Named( "RepositoryPropertyDescriptor" )PrivilegePropertyDescriptor repoProperty )
+    {
+        super( idGenerator );
+        this.repoProperty = repoProperty;
+    }
 
     public String getName()
     {

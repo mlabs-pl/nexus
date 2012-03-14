@@ -16,10 +16,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 import org.codehaus.plexus.context.Context;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public abstract class AbstractNexusTestCase
     extends org.sonatype.nexus.configuration.AbstractNexusTestCase
 {
+
+    private CacheManagerComponent cacheManagerComponent;
 
     public static final String PROXY_SERVER_PORT = "proxy.server.port";
 
@@ -55,4 +58,25 @@ public abstract class AbstractNexusTestCase
         return port;
     }
 
+    @Override
+    protected void setUp()
+        throws Exception
+    {
+        super.setUp();
+        cacheManagerComponent = lookup( CacheManagerComponent.class );
+    }
+
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        try
+        {
+            cacheManagerComponent.shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
+    }
 }

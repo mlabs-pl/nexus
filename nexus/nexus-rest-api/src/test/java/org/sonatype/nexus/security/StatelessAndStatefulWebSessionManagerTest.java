@@ -15,10 +15,7 @@ package org.sonatype.nexus.security;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
-import org.apache.shiro.cache.ehcache.EhCache;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
@@ -27,13 +24,11 @@ import org.apache.shiro.util.ThreadContext;
 import org.apache.shiro.web.subject.WebSubject;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,8 +57,7 @@ public class StatelessAndStatefulWebSessionManagerTest
         simpleAccountRealm.addAccount( "user", "user123" );
 
         securityManager =
-            new NexusWebRealmSecurityManager( LoggerFactory.getLogger( getClass() ),
-                                              new HashMap<String, RolePermissionResolver>() );
+            new NexusWebRealmSecurityManager( new HashMap<String, RolePermissionResolver>() );
         securityManager.setRealm( simpleAccountRealm );
         securityManager.init();
 

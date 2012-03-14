@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 
 import org.sonatype.nexus.configuration.application.NexusConfiguration;
-import org.sonatype.security.configuration.SecurityConfigurationManager;
 import org.sonatype.security.web.ShiroSecurityFilter;
 
 /**

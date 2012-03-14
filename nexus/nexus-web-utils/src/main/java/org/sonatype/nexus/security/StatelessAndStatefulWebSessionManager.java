@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DelegatingSession;
 import org.apache.shiro.session.mgt.SessionContext;
-import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
@@ -31,7 +29,6 @@ import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.apache.shiro.web.session.mgt.WebSessionKey;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
