@@ -34,6 +34,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter;
 
+/**
+ * This has always been a work around until we switched to shiro 1.2.
+ * @deprecated Use 'noSession' instead. (as of shiro 1.2)
+ */
+@Deprecated
 public class StatelessAndStatefulWebSessionManager
     extends DefaultWebSessionManager
 {

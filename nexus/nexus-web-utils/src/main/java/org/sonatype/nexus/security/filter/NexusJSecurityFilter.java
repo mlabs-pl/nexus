@@ -20,9 +20,14 @@ import org.sonatype.security.web.ShiroSecurityFilter;
 
 /**
  * This filter simply behaves according Nexus configuration.
- * 
+ *
+ * TODO: Need another way to replace the shouldNotFilter() method.
+ * Maybe extend GuiceShiroFilter and inject {@link org.sonatype.security.SecuritySystem} and call isSecurityEnabled().
+ *
  * @author cstamas
+ * @deprecated No longer used.
  */
+@Deprecated
 public class NexusJSecurityFilter
     extends ShiroSecurityFilter
 {

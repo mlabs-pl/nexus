@@ -1,4 +1,4 @@
-/**
+/*
  * Sonatype Nexus (TM) Open Source Version
  * Copyright (c) 2007-2012 Sonatype, Inc.
  * All rights reserved. Includes the third-party code listed at http://links.sonatype.com/products/nexus/oss/attributions.
@@ -27,11 +27,13 @@ import org.slf4j.Logger;
 import org.sonatype.security.web.WebRealmSecurityManager;
 
 /**
- * An extension of WebRealmSecurityManager used because we have a mix of POJO's and @Inject ojbects
+ * An extension of WebRealmSecurityManager used because we have a mix of POJO's and @Inject objects.
+ * @deprecated replaced with the use of injection.
  */
 @Singleton
 @Typed( value = RealmSecurityManager.class )
 @Named( value = "nexus" )
+@Deprecated
 public class NexusWebRealmSecurityManager
     extends WebRealmSecurityManager
     implements org.apache.shiro.util.Initializable

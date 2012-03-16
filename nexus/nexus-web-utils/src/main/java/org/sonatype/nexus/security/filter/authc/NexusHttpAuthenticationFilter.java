@@ -190,6 +190,12 @@ public class NexusHttpAuthenticationFilter
         }
     }
 
+    /**
+     *  TODO: consider moving this to a new filter, and chain them together, or if needed a decorator.
+     * @param request
+     * @param response
+     * @return
+     */
     protected boolean executeAnonymousLogin( ServletRequest request, ServletResponse response )
     {
         getLogger().debug( "Attempting to authenticate Subject as Anonymous request..." );
@@ -274,6 +280,7 @@ public class NexusHttpAuthenticationFilter
     protected boolean onLoginSuccess( AuthenticationToken token, Subject subject, ServletRequest request,
                                       ServletResponse response )
     {
+        // TODO: consider moving this to a new filter, and chain them together
         postAuthcEvent( request, token.getPrincipal().toString(), getUserAgent( request ), true );
 
         return true;
