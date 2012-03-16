@@ -26,6 +26,7 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.codehaus.plexus.PlexusContainer;
@@ -203,6 +204,8 @@ public class NexusHttpAuthenticationFilter
         boolean anonymousLoginSuccessful = false;
 
         Subject subject = getSubject( request, response );
+        // disable the session creation for the anon user.
+        request.setAttribute( DefaultSubjectContext.SESSION_CREATION_ENABLED, Boolean.FALSE);
 
         UsernamePasswordToken usernamePasswordToken =
             new UsernamePasswordToken( securitySystem.getAnonymousUsername(),
@@ -271,8 +274,12 @@ public class NexusHttpAuthenticationFilter
     {
         if ( applicationEventMulticaster != null )
         {
-            applicationEventMulticaster.notifyEventListeners( new NexusAuthenticationEvent( this, new ClientInfo(
-                username, RemoteIPFinder.findIP( (HttpServletRequest) request ), userAgent ), success ) );
+            applicationEventMulticaster.notifyEventListeners( new NexusAuthenticationEvent( this,
+                                                                                            new ClientInfo( username,
+                                                                                                            RemoteIPFinder.findIP(
+                                                                                                                (HttpServletRequest) request ),
+                                                                                                            userAgent ),
+                                                                                            success ) );
         }
     }
 
