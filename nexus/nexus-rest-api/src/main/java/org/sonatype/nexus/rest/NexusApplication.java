@@ -50,7 +50,7 @@ public class NexusApplication
     @Requirement
     private ApplicationEventMulticaster applicationEventMulticaster;
 
-    @Requirement
+    @Requirement( hint = "simple" )
     private ProtectedPathManager protectedPathManager;
 
     @Requirement( hint = "indexTemplate" )

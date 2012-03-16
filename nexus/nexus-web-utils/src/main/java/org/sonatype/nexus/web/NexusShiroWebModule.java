@@ -13,6 +13,7 @@
 
 package org.sonatype.nexus.web;
 
+import com.google.inject.Injector;
 import com.google.inject.Key;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.sonatype.nexus.security.filter.authc.NexusSecureHttpAuthenticationFilter;
@@ -70,8 +71,9 @@ public class NexusShiroWebModule extends ShiroWebGuiceModule
         bindTargetMappingFilter( "tgperms", "/service/local/repo_groups/(.*)/content(.*)", "/groups/@1@2" );
         bindTargetMappingFilter( "tgiperms", "/service/local/repo_groups/(.*)/index_content(.*)", "/groups/@1@2" );
 
-        bindTargetMappingFilter( "contentTperms", "pathPrefix = /content(.*)", "@1" );
+        bindTargetMappingFilter( "contentTperms", "/content(.*)", "@1" );
 
+        this.configureFilterChainManager();
     }
 
 }
