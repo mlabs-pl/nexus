@@ -37,6 +37,7 @@
     <module>nexus-groovy-console-plugin</module>
     <module>nexus-archetype-plugin</module>
     <module>nexus-maven-bridge-plugin</module>
+    <module>nexus-security-filter-test-plugin</module>
   </modules>
 
   <build>
