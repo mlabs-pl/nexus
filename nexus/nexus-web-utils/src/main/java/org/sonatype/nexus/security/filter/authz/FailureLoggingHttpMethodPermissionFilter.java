@@ -45,33 +45,11 @@ public class FailureLoggingHttpMethodPermissionFilter
     extends HttpMethodPermissionFilter
 {
     private final Logger logger = LoggerFactory.getLogger( this.getClass() );
-
-    // this comes from attributes set by plexus helper listener (nexus-web-utils module)
-//    private PlexusContainer plexusContainer;
-
-    // this comes from Plexus IoC but we need to "lift" them manually, no injection here
-//    @Inject
-//    private Nexus nexus;
-    
-    // this comes from Plexus IoC but we need to "lift" them manually, no injection here
     @Inject
     private SecuritySystem securitySystem;
 
-    // this comes from Plexus IoC but we need to "lift" them manually, no injection here
     @Inject
     private ApplicationEventMulticaster applicationEventMulticaster;
-
-//    protected void onFilterConfigSet()
-//        throws Exception
-//    {
-//        super.onFilterConfigSet();
-//
-////        plexusContainer = (PlexusContainer) getAttribute( PlexusConstants.PLEXUS_KEY );
-//
-//        nexus = plexusContainer.lookup( Nexus.class );
-//        nexusConfiguration = plexusContainer.lookup( NexusConfiguration.class );
-//        applicationEventMulticaster = plexusContainer.lookup( ApplicationEventMulticaster.class );
-//    }
 
     protected Logger getLogger()
     {

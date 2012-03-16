@@ -24,7 +24,7 @@ import org.sonatype.security.web.guice.ShiroWebGuiceModule;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * Sets up Nexus's shiro configuration.
  */
 public class NexusShiroWebModule extends ShiroWebGuiceModule
 {
