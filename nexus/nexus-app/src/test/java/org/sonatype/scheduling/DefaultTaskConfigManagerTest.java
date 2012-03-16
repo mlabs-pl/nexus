@@ -37,6 +37,7 @@ import org.sonatype.scheduling.schedules.MonthlySchedule;
 import org.sonatype.scheduling.schedules.OnceSchedule;
 import org.sonatype.scheduling.schedules.Schedule;
 import org.sonatype.scheduling.schedules.WeeklySchedule;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public class DefaultTaskConfigManagerTest
     extends AbstractNexusTestCase
@@ -88,6 +89,20 @@ public class DefaultTaskConfigManagerTest
         defaultManager = (DefaultTaskConfigManager) lookup( TaskConfigManager.class.getName() );
         applicationConfiguration = lookup( NexusConfiguration.class );
         applicationConfiguration.loadConfiguration();
+    }
+
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        try
+        {
+            this.lookup( CacheManagerComponent.class ).shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
     }
 
     @Test

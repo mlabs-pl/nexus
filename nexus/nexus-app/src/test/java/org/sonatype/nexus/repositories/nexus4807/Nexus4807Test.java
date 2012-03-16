@@ -28,6 +28,7 @@ import org.sonatype.nexus.proxy.repository.Repository;
 import org.sonatype.nexus.templates.TemplateManager;
 import org.sonatype.nexus.templates.repository.RepositoryTemplate;
 import org.sonatype.nexus.test.NexusTestSupport;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 /**
  * Testing is repository released (from container) when it is removed from Nexus. See NEXUS-4807.
@@ -97,4 +98,11 @@ public class Nexus4807Test
         assertThat( nexus4807Repository.isDisposeInvoked(), is( true ) );
     }
 
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        this.lookup( CacheManagerComponent.class ).shutdown();
+        super.tearDown();
+    }
 }

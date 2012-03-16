@@ -34,6 +34,7 @@ import org.sonatype.nexus.test.PlexusTestCaseSupport;
 import org.sonatype.security.SecuritySystem;
 import org.sonatype.security.authentication.AuthenticationException;
 import org.sonatype.security.realms.tools.ConfigurationManager;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public class SimpleRealmTest
     extends PlexusTestCaseSupport
@@ -161,6 +162,14 @@ public class SimpleRealmTest
         this.lookup( SecuritySystem.class ).start();
     }
 
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        this.lookup( SecuritySystem.class ).stop();
+        this.lookup( CacheManagerComponent.class ).shutdown();
+        super.tearDown();
+    }
 
     @Override
     protected void customizeContext( Context ctx )

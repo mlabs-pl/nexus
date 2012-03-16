@@ -33,15 +33,19 @@ import org.sonatype.security.usermanagement.RoleIdentifier;
 import org.sonatype.security.usermanagement.User;
 import org.sonatype.security.usermanagement.UserManager;
 import org.sonatype.security.usermanagement.UserSearchCriteria;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public class LdapUserManagerTest
     extends AbstractLdapTest
 {
+
+    private CacheManagerComponent cacheManagerComponent;
+
     @Override
     protected void customizeContainerConfiguration( ContainerConfiguration configuration )
     {
         configuration.setAutoWiring( true );
-        configuration.setClassPathScanning( PlexusConstants.SCANNING_CACHE );
+        configuration.setClassPathScanning( PlexusConstants.SCANNING_INDEX );
     }   
 
     @Override
@@ -53,6 +57,21 @@ public class LdapUserManagerTest
         this.copyResourceToFile("/test-conf/conf/security-users-in-both-realms.xml", new File( CONF_HOME, "security.xml" ) );
         
         this.copyResourceToFile("/test-conf/conf/security-configuration.xml", new File( CONF_HOME, "security-configuration.xml" ) );
+        cacheManagerComponent = this.lookup( CacheManagerComponent.class );
+    }
+
+    @Override
+    public void tearDown()
+        throws Exception
+    {
+        try
+        {
+            cacheManagerComponent.shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
     }
 
     private SecuritySystem getSecuritySystem()

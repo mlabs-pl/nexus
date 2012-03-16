@@ -16,10 +16,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sonatype.nexus.test.NexusTestSupport;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public abstract class AbstractTimelineTest
     extends NexusTestSupport
 {
+    private CacheManagerComponent cacheManagerComponent;
+
+    @Override
+    protected void setUp()
+        throws Exception
+    {
+        super.setUp();
+        cacheManagerComponent = this.lookup( CacheManagerComponent.class );
+    }
+
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        try
+        {
+            cacheManagerComponent.shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
+    }
+
     /**
      * Handy method that does what was done before: keeps all in memory, but this is usable for small amount of data,
      * like these in UT. This should NOT be used in production code, unless you want app that kills itself with OOM.

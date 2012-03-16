@@ -31,10 +31,12 @@ import org.sonatype.nexus.security.ldap.realms.api.dto.LdapConnectionInfoDTO;
 import org.sonatype.nexus.test.NexusTestSupport;
 import org.sonatype.plexus.rest.resource.error.ErrorMessage;
 import org.sonatype.plexus.rest.resource.error.ErrorResponse;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public abstract class AbstractNexusLdapTestCase
     extends NexusTestSupport
 {
+    private CacheManagerComponent cacheManagerComponent;
 
     /**
      * The ldap server.
@@ -94,6 +96,8 @@ public abstract class AbstractNexusLdapTestCase
 
         this.copyDefaultSecurityConfigToPlace();
         this.copyDefaultLdapConfigToPlace();
+
+        cacheManagerComponent = this.lookup( CacheManagerComponent.class );
     }
 
     protected String getErrorString( ErrorResponse errorResponse, int index )
@@ -112,7 +116,14 @@ public abstract class AbstractNexusLdapTestCase
         // configure the logging
         SLF4JBridgeHandler.uninstall();
 
-        super.tearDown();
+        try
+        {
+            cacheManagerComponent.shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
     }
 
     protected void validateConnectionDTO( LdapConnectionInfoDTO expected, LdapConnectionInfoDTO actual )

@@ -26,10 +26,34 @@ import org.sonatype.nexus.test.NexusTestSupport;
 import org.sonatype.plexus.rest.resource.PlexusResource;
 
 import com.sun.syndication.feed.synd.SyndFeed;
+import org.sonatype.sisu.ehcache.CacheManagerComponent;
 
 public class FeedTest
     extends NexusTestSupport
 {
+    private CacheManagerComponent cacheManagerComponent;
+
+    @Override
+    protected void setUp()
+        throws Exception
+    {
+        super.setUp();
+        cacheManagerComponent = this.lookup( CacheManagerComponent.class );
+    }
+
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        try
+        {
+            cacheManagerComponent.shutdown();
+        }
+        finally
+        {
+            super.tearDown();
+        }
+    }
 
     @Test
     public void testFeedSources()

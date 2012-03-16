@@ -128,6 +128,7 @@ public class ForgotPasswordTest
     public void setUp()
         throws Exception
     {
+        super.setUp();
         ServerSocket socket = new ServerSocket( 0 );
         this.emailServerPort = socket.getLocalPort();
         socket.close();
