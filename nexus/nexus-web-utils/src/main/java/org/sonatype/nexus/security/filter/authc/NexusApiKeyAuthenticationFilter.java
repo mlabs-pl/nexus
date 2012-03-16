@@ -14,6 +14,7 @@ package org.sonatype.nexus.security.filter.authc;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -28,18 +29,8 @@ import org.apache.shiro.web.util.WebUtils;
 public class NexusApiKeyAuthenticationFilter
     extends NexusSecureHttpAuthenticationFilter
 {
+    @Inject
     private Collection<String> apiKeys;
-
-    @Override
-    protected void onFilterConfigSet()
-        throws Exception
-    {
-        super.onFilterConfigSet();
-        if ( null == apiKeys )
-        {
-            apiKeys = getPlexusContainer().lookupMap( NexusApiKey.class ).keySet();
-        }
-    }
 
     @Override
     protected boolean isLoginAttempt( ServletRequest request, ServletResponse response )

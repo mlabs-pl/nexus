@@ -30,6 +30,7 @@ import org.mockito.Mockito;
 import org.sonatype.nexus.configuration.application.NexusConfiguration;
 import org.sonatype.nexus.security.filter.NexusJSecurityFilter;
 import org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter;
+import org.sonatype.security.SecuritySystem;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -60,7 +61,7 @@ public class NexusHttpAuthenticationFilterTest
 
     private HttpServletResponse response;
 
-    private NexusConfiguration nexusConfiguration;
+    private SecuritySystem securitySystem;
 
     @Before
     public void bindSubjectToThread()
@@ -107,11 +108,11 @@ public class NexusHttpAuthenticationFilterTest
     }
 
     @Before
-    public void setupNexusConfig()
+    public void setupSecuritySystem()
     {
-        nexusConfiguration = Mockito.mock( NexusConfiguration.class );
-        Mockito.when( nexusConfiguration.getAnonymousUsername() ).thenReturn( "anonymous" );
-        Mockito.when( nexusConfiguration.getAnonymousPassword() ).thenReturn( "anonymous" );
+        securitySystem = Mockito.mock( SecuritySystem.class );
+        Mockito.when( securitySystem.getAnonymousUsername() ).thenReturn( "anonymous" );
+        Mockito.when( securitySystem.getAnonymousPassword() ).thenReturn( "anonymous" );
     }
 
     @After
@@ -164,11 +165,6 @@ public class NexusHttpAuthenticationFilterTest
                 return super.executeAnonymousLogin( request, response );
             }
 
-            @Override
-            protected NexusConfiguration getNexusConfiguration()
-            {
-                return nexusConfiguration;
-            }
         }.executeAnonymousLogin( request, response );
         // what a hack... just to call a protected method
     }
