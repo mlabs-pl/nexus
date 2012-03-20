@@ -395,7 +395,7 @@
 
         var welcomePanelConfig = {
           layout : 'auto',
-          width : 500,
+          columnWidth : 0.7,
           items : []
         };
         var welcomeTabConfig = {
@@ -409,10 +409,10 @@
                   style : 'padding-top: 30px;'
                 },
                 items : [{
-                      columnWidth : .5,
+                      columnWidth : .15,
                       html : '&nbsp;'
                     }, welcomePanelConfig, {
-                      columnWidth : .5,
+                      columnWidth : .15,
                       html : '&nbsp;'
                     }]
               }],
@@ -444,6 +444,7 @@
         var itemCount = welcomePanelConfig.items.length;
 
         Sonatype.Events.fireEvent('welcomePanelInit', this, welcomePanelConfig);
+        Sonatype.Events.fireEvent('welcomePanelPostInit', this, welcomePanelConfig);
 
         // If nothing was added, then add the default blurb, if perm'd of course
         if (welcomePanelConfig.items.length <= itemCount && sp.checkPermission('nexus:repostatus', sp.READ))
