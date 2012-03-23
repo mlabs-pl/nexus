@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -55,7 +57,8 @@ public class DefaultLdapManager
 {
 
     private Logger logger = LoggerFactory.getLogger( getClass() );
-
+    private static ConcurrentMap<String, CacheEntry<LdapUser>> m_usersCache = new ConcurrentHashMap<String, CacheEntry<LdapUser>> ();
+    
     @Requirement
     private LdapAuthenticator ldapAuthenticator;
 
@@ -96,7 +99,26 @@ public class DefaultLdapManager
         throws NoSuchLdapUserException,
             LdapDAOException
     {
-        return this.getLdapConnector().getUser( username );
+    	CacheEntry<LdapUser> cachedUser = m_usersCache.get (username);
+    	if (cachedUser == null || !cachedUser.isValid ())
+    	{
+    		logger.debug ("Fetching user " + username + " from Ldap database");
+    		LdapUser ldapUser = this.getLdapConnector().getUser( username );
+    		CacheEntry<LdapUser> newCachedEntry = new CacheEntry<LdapUser> (ldapUser);
+    		//if previous entry was not available try to put a new one - use putIfAbsent since some other thread may have already filled entry
+    		//if previous entry was present try to replace it, but only if the old value matches new value, again some other thread may have already updated it
+    		if (cachedUser == null)
+    			m_usersCache.putIfAbsent (username, newCachedEntry);
+    		else
+    			m_usersCache.replace (username, cachedUser, newCachedEntry);
+    		return ldapUser;
+    	}
+    	else
+    	{
+    		logger.debug ("Fetching user " + username + " from the cache");
+    		return cachedUser.getItem ();
+    	}
+    	
     }
 
     public Set<String> getUserRoles( String userId )
